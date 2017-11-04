@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="Generator" content="EditPlus®">
+		<meta name="Author" content="旁观者">
+		<meta name="Keywords" content="唱吧飞入特效">
+		<meta name="Description" content="飞入">
+		<title> 唱吧飞入特效</title>
+		<style type="text/css">
+			*{
+				margin:0;
+				overflow:scroll;
+			}
+			#box{
+				background-color:#f54934;
+				width:auto;
+				height:848px;
+			}
+			#small-box{
+				position:absolite;
+				left:270px;
+				top:100px;
+				width:960px;
+				height:413px;
+				margin:440px 100px 0 330px;
+			}.top1{
+				position:relative;
+				left:40px;
+				top:100px;
+				animation:zoom-top1 .5s backwards;
+				animation-delay:1s
+			}
+			@keyframes zoom-top1{
+				0%{left:-300px;}
+				100%{left:40px;}
+			}
+			.top2{
+				position:relative;
+				left:-80px;
+				top:60px;
+				animation:zoom-top2 .5s backwards;
+				animation-delay:.5s
+			}
+			@keyframes zoom-top2{
+				0%{left:-580px;}
+				100%{left:-80px;}
+			}
+			.top3{
+				position:relative;
+				left:-220px;
+				top:50px;
+				animation:zoom-top3 .5s ;
+				/* -moz-animation-fill-mode: forwards; */
+			}
+			@keyframes zoom-top3{
+				0%{transform:scale(0);}
+				30%{transform:scale(.8);}
+				50%{transform:scale(1);}
+				65%{transform:scale(1.2);}
+				70%{transform:scale(1);}
+				75%{transform:scale(.85);}
+				80%{transform:scale(1);}
+				85%{transform:scale(1.15);}
+				90%{transform:scale(1);}
+				95%{transform:scale(.9);}
+				100%{transform:scale(1);}
+			}
+			
+			.top4{
+				position:relative;
+				left:540px;
+				top:-320px;
+				animation:zoom-top4 .5s backwards;
+				animation-delay:.5s
+			}
+			@keyframes zoom-top4{
+				0%{left:1000px;}
+				100%{left:540px;}
+			}
+			.top5{
+				position:relative;
+				right:-370px;
+				top:-380px;
+				animation:zoom-top5 .5s backwards;
+				animation-delay:1s;
+			}
+			@keyframes zoom-top5{
+				0%{right:-670px;}
+				100%{right:-380px;}
+			}
+		</style>
+		<!-- <link rel='stylesheet' type='text/css' herf='css/main.css'>-->
+    </head> 
+	<body>
+		<div id='box'>
+			<div id='small-box'>
+				<img class='top1' src="img/top1.png">
+				<img class='top2' src="img/top2.png">
+				<img class='top3' src="img/top3.png">
+				<img class='top4' src="img/top4.png">
+				<img class='top5' src="img/top5.png">
+			</div>
+		</div>
+	</body>
+</html>
