@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+	<title>趣味消消乐2</title>
+	<style type="text/css">
+		body{
+			margin:0;
+			background-image:url(img/2017.jpg);
+		}
+		table{
+			border:1px solid #333;
+			border-collapse:collapse;
+			font-family:'楷体';
+			font-size:20px;
+			color:#F00;
+		}
+		td{
+			padding:0;
+			border:1px solid #333;	
+			width:30px;
+			height:30px;
+		}
+		.bg{
+			background-image:url(img/green.png);		
+		}
+	</style>	
+</head>
+
+<body>
+	<div id="tb">
+    
+    </div>
+    <script type="text/javascript"> 
+		
+		var number =15;
+		function create(){
+			var oTb = document.getElementById("tb");
+			oTb.innerHTML = "<center><table> <caption> 趣味消消乐2</caption><tbody></tbody></table></center>"
+			var oTable = oTb.getElementsByTagName("center")[0].getElementsByTagName("table")[0].getElementsByTagName("tbody")[0];
+			for(var i=0; i<number ; i++){
+				var oTr = oTable.insertRow();
+				for(var j=0; j<number ; j++){
+					var oTd = oTr.insertCell();	
+				}
+			}
+			document.getElementsByTagName("tbody")[0].appendChild(oTr);
+		}
+		
+		
+			
+		function active(){
+			
+			create();
+			
+			var oTr = document.getElementsByTagName("tr");
+			for(var i=0 ; i<oTr.length ; i++){
+				var oTd = oTr[i].getElementsByTagName("td");
+				for(var j=0 ; j<oTd.length ; j++){
+					oTd[j].onclick = function(){
+						this.className = "bg";
+					};	
+				}	
+			}	
+		}
+		
+		active();
+	</script>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!doctype html>
+<html>
+	<head>
+		<meta chraset = 'utf-8'>
+		<title>move</title>
+		<style type="text/css">
+			body{
+				margin:0;
+			}
+			table{
+				border-collapse: collapse;
+				font-family: '楷体';
+				font-size: 40px;
+			}
+			td{
+				border:1px solid #333;
+				border-collapse: collapse;
+				padding:0;
+				width:28px;
+				height:28px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="maintable">
+			
+		</div>
+		<script type="text/javascript">
+
+			var SIZE = 10;
+			var tdArray = new Array(SIZE);
+			var urlArray = new Array(SIZE);
+			var pathArray;
+			var step;
+			var start;
+			for(var i=0 ; i <SIZE ; i++ ){
+				urlArray[i] = new Array(SIZE);
+			}
+
+			createTable();
+			putPathIntopathArray();
+
+
+			function createTable(){
+				var oDiv = document.getElementById("maintable");
+				oDiv.innerHTML = "<center><table><caption>move</caption></table></center>";
+				var oTable = document.getElementsByTagName("table")[0];
+
+				var oTbody = document.createElement("tbody");
+				for(var i = 0 ; i < SIZE ; i++){
+					var oTr = document.createElement("tr");
+					tdArray[i] = new Array(SIZE);
+					for(var j = 0 ; j < SIZE ; j++){
+						var oTd = document.createElement("td");
+						oTr.appendChild(oTd);
+						oTd.style.backgroundImage = "";
+						tdArray[i][j] = oTd;
+					}
+					oTbody.appendChild(oTr);
+				}
+				oTable.appendChild(oTbody);
+			}
+
+			function putBall(i,j){
+				var ranBall = parseInt(Math.random()*6);
+				tdArray[i][j].style.backgroundImage = "url(img/gray.png)";
+			}
+			function putPathIntopathArray(){
+				putBall(0,0);
+
+				//寻找路径
+				step = 0;
+				pathArray = new Array();
+				for(var i = 0; i < SIZE ; i++){
+					pathArray[step] = tdArray[0][i];
+					step++;
+				}
+
+				//获得小球
+				//var  thisBall;
+				//thisBall = getBall();
+				start = 0;
+				window.setTimeout('moveBall();',500);
+			}
+
+			function moveBall(){
+				pathArray[start+1].style.background = pathArray[start].style.background ;
+				pathArray[start].style.background = '';
+				start++;
+				if(start < step-1)
+					window.setTimeout("moveBall();",500);
+			}
+		</script>
+	</body>
+</html>

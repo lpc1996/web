@@ -1,0 +1,248 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>A*算法</title>
+<style>
+	td{
+		width:30px;
+		height:30px;
+	}
+</style>
+</head>
+
+<body>
+	<table border="1" align="center" id="table">
+    </table>
+</body>
+<script>
+	var SIZE = 10;
+	var picArr = new Array(
+			"url(img/blue.png)",
+			"url(img/blue00.png)",
+			"url(img/red.png)",
+			"url(img/green.png)",
+			"url(img/yellow.png)",
+			"url(img/purple.png)"
+		);
+	var tdArray;
+	var beginI, beginJ;
+	var endI, endJ;
+	var gridArray;
+	var num;
+	var ok;
+	
+	gridArray = new Array(SIZE * SIZE);
+	initTable();
+	for (var i=0; i<20; i++)
+		putBall();
+	inputBeginEnd();
+	searchPath();
+	printLine();
+	
+	function initTable(){
+		var table;
+		
+		table = document.getElementById("table");
+		tdArray = new Array(10);
+		
+		for (var i=0; i<SIZE; i++){
+			var tr;
+			tr = document.createElement("tr");
+			tdArray[i] = new Array(10);
+			for (var j=0; j<SIZE; j++){
+				var td;
+				td = document.createElement("td");
+				td.style.backgroundImage = "";
+				tr.appendChild(td);
+				tdArray[i][j] = td;
+			}
+			table.appendChild(tr);
+		}
+	}
+	
+	function putBall(){
+		var i, j;
+		//得到随机的位置 i, j
+		i = parseInt((Math.random()*SIZE));
+		j = parseInt((Math.random()*SIZE));
+		while (tdArray[i][j].style.backgroundImage != ""){
+			j++;
+			if (j == SIZE){
+				j=0;
+				i++;
+				if (i ==SIZE)
+					i = 0;
+			}
+		}
+		
+		var val;
+		//得到随机的小球 val
+		val = parseInt((Math.random()*picArr.length));
+		
+		tdArray[i][j].style.backgroundImage = picArr[val];
+	}
+	
+	function inputBeginEnd(){
+		beginI = parseInt(window.prompt("开始的行：", 0));
+		beginJ = parseInt(window.prompt("开始的列：", 0));
+		endI = parseInt(window.prompt("结束的行：", 0));
+		endJ = parseInt(window.prompt("结束的列：", 0));
+	}
+	
+	//构造函数
+	function GridInfo(prePos, curI, curJ, g, f){
+		this.prePos = prePos;	//创建的对象
+		this.curI = curI;
+		this.curJ = curJ;
+		this.g = g;
+		this.f = f;
+		this.flag = 1;	//1:open  2:close
+	}
+	
+	function getF(i, j){
+		return Math.abs(i-endI) 
+				+ Math.abs(j-endJ);
+	}
+	
+	function putBeginIntoGridarray(){
+		num = 0;
+		gridArray[num] = new GridInfo(
+				-1
+				, beginI
+				, beginJ, 0
+				, getF(beginI, beginJ));
+		num++;
+	}
+	
+	function searchMinGf(){
+		//第一个flag为1的元素
+		var i;
+		for (i=0; i<num; i++){
+			if (gridArray[i].flag == 1){
+				break;
+			}
+		}
+		
+		//没找到
+		if (!(i<num))	//加括号
+			return -1;
+			
+		//找最小的元素
+		var min = gridArray[i].g 
+				+ gridArray[i].f;
+		var pos = i;
+		for (; i<num; i++){
+			if (gridArray[i].flag == 1 &&
+				gridArray[i].g+gridArray[i].f
+				< min){
+				pos = i;
+				min = gridArray[i].g 
+					+ gridArray[i].f;
+			}
+		}
+		
+		return pos;
+	}
+	
+	function addGridIntoArray(prePos, curI
+			, curJ, g, f){
+		//查找gridArray中是否有该位置
+		var i;
+		for (i=0; i<num; i++){
+			if (gridArray[i].curI==curI
+				&& gridArray[i].curJ==curJ)
+				break;
+		}
+		
+		//没有，在末尾添加
+		if (!(i<num)){
+			gridArray[num] = 
+				new GridInfo(
+				prePos, curI, curJ, g, f);
+			num++;
+			if (curI==endI && curJ==endJ)
+				ok = 1;
+		}
+		else {
+			//有，如果flag=2，不处理
+			if (gridArray[i].flag == 1){
+				//有，如果falg=1，如果已有数据		
+				//的g+f小于该g+f，不处理
+				//有，否则，将原有的prePos改为
+				//新的prePos
+				if (gridArray[i].g 
+					+ gridArray[i].f > g+f){
+					gridArray[i].prePos 
+						= prePos;
+				}
+			}
+		}
+	}
+	
+	function searchPath(){
+		//将起点信息放在gridArray中
+		putBeginIntoGridarray();
+		ok = 0;
+		while (ok == 0){
+			//在gridArray中找flag为1的，g+f最小的位置
+			var pos = searchMinGf();
+			//alert(gridArray[pos].curI+" "
+			//	+gridArray[pos].curJ);
+			//没找到---无路可走
+			if (pos == -1)
+				alert("无路可走");
+			//找到：flag置为2
+			gridArray[pos].flag = 2;
+			//上下左右的格子信息放到gridArray中
+			var curI = gridArray[pos].curI;
+			var curJ = gridArray[pos].curJ;
+			var g = gridArray[pos].g + 1;
+			//上
+			if (ok==0 && curI>0 && tdArray[curI-1][curJ].style.backgroundImage==""){
+				addGridIntoArray(pos, curI-1
+					, curJ, g, getF(curI-1, curJ));
+			}
+			//下
+			if (ok==0 && curI<SIZE-1 && tdArray[curI+1][curJ].style.backgroundImage==""){
+				addGridIntoArray(pos, curI+1
+					, curJ, g, getF(curI+1, curJ));
+			}
+			//左
+			if (ok==0 && curJ>0 && tdArray[curI][curJ-1].style.backgroundImage==""){
+				addGridIntoArray(pos, curI
+					, curJ-1, g, getF(curI, curJ-1));
+			}
+			//右
+			if (ok==0 && curJ<SIZE-1 && tdArray[curI][curJ+1].style.backgroundImage==""){
+				addGridIntoArray(pos, curI
+					, curJ+1, g, getF(curI, curJ+1));
+			}
+		}
+	}
+	
+	function printLine(){
+		if (ok == 1){
+			var i, j;
+			num--;
+			do{
+				i = gridArray[num].curI;
+				j = gridArray[num].curJ;
+				tdArray[i][j].style.backgroundImage = "url(img/gray.png)";
+				num = gridArray[num].prePos;
+			}while(num != -1);
+		}
+	}
+	
+</script>
+</html>
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>自动创建表格</title>
+<style type="text/css">
+table{
+    width:300px;
+    height:100px;
+    border:#0C9 1px solid;
+    border-collapse:collapse;
+    }
+</style>
+<script type="text/javascript" language="javascript">
+function autocreate(){
+    //创建table表格
+    var table=document.createElement("table");
+    table.setAttribute("border","1");
+    table.setAttribute("background","red");
+    //获取行数值
+    var line=document.getElementById("line").value;
+    //获取列数值
+    var list=document.getElementById("list").value;
+    for(var i=0;i<=line;i++){
+        //alert(line);
+        //创建tr
+        var tr=document.createElement("tr");
+        for(var j=0;j<=list;j++){
+            //alert(list);
+            //创建td
+            var td=document.createElement("td");
+            tr.appendChild(td);
+            }
+            table.appendChild(tr);
+        }
+        document.getElementById("d1").appendChild(table);
+    }
+</script>
+</head><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>动态生成表格</title>
+    <script type="text/javascript">
+
+    </script>
+</head>
+<body>
+行:<input type="text" id="h"/>&nbsp;
+列:<input type="text" id="l"/>
+<input type="button" value="生成" onclick="addTable();"/>
+<div id="div1">
+
+</div>
+<script type="text/javascript">
+    function addTable() {
+        var row1=document.getElementById("h").value;//获取属性值
+        var col1=document.getElementById("l").value;//获取属性值
+        var div1=document.getElementById("div1");
+        var tab="<table border='1' bordercolor='blue' width='200' height='10'>";
+        //循环行
+        for(var i=1;i<=row1;i++)
+        {
+            tab+="<tr>";
+            //循环列
+            for(var j=1;j<=col1;j++)
+            {
+                tab+="<td>单元格"+j+"</td>";
+            }
+            tab+="</tr>";
+        }
+        tab+="</table>"
+         div1.innerHTML=tab;
+    }
+</script>
+</body>
+</html>
+<body>
+<input type="text" id="line">行数
+<input type="text" id="list">列数
+<input type="button" value="添加表格" onclick="autocreate()">
+<p id="d1" style="height:400px; width:300px;"></p>
+</body>
+</html>

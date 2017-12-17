@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>消消乐小游戏</title>
+		<style type="text/css">
+			body{
+				margin:0;
+			}
+			table{
+				border:1px solid #333;
+				border-collapse: collapse;
+				font-family: "楷体";
+				font-size: 40px;
+				color:red;
+			}
+			td{
+				border:1px solid #333;
+				width:28px;
+				height:28px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id ="Mainfrom" >
+			<!-- 用来显示表格主体 -->
+			<div class = "Mainfrom-table">
+				
+			</div>
+		</div>
+
+		<script type="text/javascript">
+			
+			var SIZE = 15;
+			var UrlArray = new Array("url(img/blue.png)","url(img/blue00.png)","url(img/green.png)",
+				"url(img/yellow.png)","url(img/red.png)","url(img/purple.png)");
+			var tdArray = new Array(SIZE);
+			var beginI = 0;
+			var beginJ = 0;
+			var endI = 0;
+			var endJ = 0;
+			var click = 0;
+
+			createTable();
+			for(var i = 0 ; i < tdArray.length ; i++){
+				tdArray[i] = document.getElementsByTagName("tr")[i].getElementsByTagName("td");
+			}
+			initTable();
+			getBeginAndEnd();
+
+			/*
+			用javascript创建一个SIZE*SIZE的表格
+			*/
+			function createTable(){
+				var oMainFrom = document.getElementById("Mainfrom");
+				var oMainFrom_table = oMainFrom.getElementsByClassName('Mainfrom-table')[0];
+				oMainFrom_table.innerHTML = "<center><table><caption>消消乐小游戏</caption></table></center>";
+				var oTable = oMainFrom_table.getElementsByTagName("center")[0].getElementsByTagName("table")[0];
+				var oTbody = document.createElement("tbody");
+
+				for(var i = 0 ; i < SIZE ; i++){
+					var oTr = document.createElement("tr");
+					for(var j = 0 ; j < SIZE ; j++){
+						oTd = document.createElement("td");
+						oTr.appendChild(oTd);
+					}
+					oTbody.appendChild(oTr)
+				}
+				oTable.appendChild(oTbody);
+			}
+
+			//对表格进行初始化
+			function initTable(){
+				var indexRow = 0;
+				for(var i = 0 ; i < 4 ; i++){
+					var ranBall = parseInt(Math.random()*6);
+					// console.log(ranBall);
+					var ranRow = parseInt(Math.random()*SIZE);
+					var ranCell = parseInt(Math.random()*SIZE);
+					do{
+						if( tdArray[ranRow][ranCell].style.backgroundImage == '' ){
+							tdArray[ranRow][ranCell].style.backgroundImage = UrlArray[ranBall];
+							break;
+						}
+						else{
+							ranCell++;
+							if(ranCell == SIZE){
+								ranCell = 0;
+								ranRow++;
+								indexRow++;
+								if(ranRow == SIZE){
+									ranRow = 0;
+								}
+							}
+						} 
+					}while(indexRow <= SIZE);
+				}
+			}
+
+			function curClick(){
+				for(var i = 0 ; i < SIZE ; i ++){
+					for( var j = 0; j < SIZE ; j ++){
+						if(tdArray[i][j] = this)
+							clickTime(i,j);
+					}
+				}
+			}
+
+			function clickTime(i,j){
+				if(click == 0){
+					if(tdArray[i][j].style.backgroundImage != '' ){
+						beginI = i; 
+						beginJ = j;
+						click++;
+					}
+				}
+				else{
+					if(tdArray[i][j].style.backgroundImage == ''){
+						endI = i;
+						endJ = j;
+						click = 0;
+					}
+					else{
+						beginI = i;
+						beginJ = j;
+					}
+				}
+			}
+			function getBeginAndEnd(){
+				for(var i = 0 ; i < SIZE ; i++){
+					for(var j = 0 ; j < SIZE ; j++){
+						tdArray[i][j].onclick = curClick;
+					}
+				}
+			}
+		</script>
+	</body>
+</html>

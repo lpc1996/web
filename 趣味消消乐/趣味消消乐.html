@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>趣味消消乐</title>
+		<style>
+			body{
+				margin: 0;
+				background-image:url(img/2017.jpg);
+			}
+			table{
+				border:1px solid #333;
+				color:red;
+				border-collapse:collapse;
+				font-size: 40px;
+				font-family: '楷体';
+				text-align:center;
+			}
+			td{
+				border:1px solid #333;
+				padding:0;
+				width:30px;
+				height:30px;
+			}
+			
+		</style>
+		
+	</head>
+	<body>
+			<!-- <object height="40px" width="1000px" data="music/凤凰传奇 - 御龙归字谣.mp3"> </object> -->
+		<div id="tb">
+        	
+        </div>
+        
+        
+        <script type="text/javascript">
+			var Order=10;
+			var EMEPT = ' ';
+			var tdArray = new Array(Order);
+			for(var i=0 ; i<Order ; i++){
+				tdArray = new Array;
+				for(var j=0 ;j<Order ; j++){
+					
+				}
+			}
+
+			function data (index){
+				var url = new Array("url(img/green.png)",
+					"url(img/blue.png)",
+					"url(img/red.png)",
+					"url(img/blue00.png)",
+					"url(img/purple.png)",
+					"url(img/yellow.png)");
+				if(index >= 0 && index < 6)
+					return url[index];
+				else 
+					return null;
+			}
+
+			create();
+			move();
+			init();
+
+			function create(){
+				
+				var oTable = document.getElementById("tb");
+				oTable.innerHTML="<center><table><caption>趣味消消乐</caption><tbody></tbody></table></center>";
+				for(var i=0;i<Order;i++){
+					var tr=oTable.getElementsByTagName("center")[0].getElementsByTagName("table")[0].getElementsByTagName("tbody")[0].insertRow();
+					for(var j=0;j<Order;j++){
+						var td=tr.insertCell();
+					}	
+				}
+				document.getElementsByTagName("table")[0].getElementsByTagName("tbody")[0].appendChild(tr);
+			}			
+			
+			function move(){
+				var oTr = document.getElementById("tb").getElementsByTagName("center")[0].getElementsByTagName("table")[0].getElementsByTagName("tbody")[0].getElementsByTagName("tr");			
+				
+				for(var i=0;i<oTr.length;i++){
+					var oTd = oTr[i].getElementsByTagName("td");
+					for(var j=0;j<oTd.length;j++){
+						oTd[j].onclick = function () {
+							this.className = "bg-yellow";
+						};
+					}
+				}	
+			}
+			
+			function init(){
+				var oTd = new Array();
+				for(var i=0 ; i<Order ; i++){
+					oTd[i] = document.getElementsByTagName("tr")[i].getElementsByTagName("td");
+				}
+				for (var i=0 ; i < 4 ; i++){
+					var ranBall = Math.floor(Math.random()*6);
+					var thisBall = data(ranBall);
+					if(thisBall != null){
+						var j=0;
+						var ranRow = Math.floor(Math.random()*Order);
+						var ranCell = Math.floor(Math.random()*Order);
+						while( j <= Order){
+							if(ranRow)
+							oTd[ranRow][ranCell].style.background = thisBall;
+						}	
+					}
+				}
+			}
+		
+			
+		</script>
+	</body>
+</html>
