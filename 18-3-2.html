@@ -1,0 +1,94 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset = "utf-8">
+	<meta name = "author" content = "柳鹏程">
+	<meta name = "keywords" content = "数字时钟" >
+	<title>数字时钟</title>
+	<style>
+		body{
+			margin:0;
+		}
+		#clock{
+			width:640px;
+			height:200px;
+			border:1px #333 solid;
+			border-radius:10px;
+			margin:auto;
+		}
+		.clock-son{
+			display:inline-block;
+			width:200px;
+			height:200px;
+			/*margin-left:20px;
+			background-color:red;*/
+		}
+		#hour{
+			border-radius:10px 0 0 10px;
+		}
+		.cen{
+			display:inline-block;
+			width5px;
+			height:200px;
+		}
+		#sec{
+			border-radius:0 10px 10px 0;
+		}
+		span{
+			line-height:200px;
+			font-size:40px;
+		}
+	</style>
+</head>
+
+<body>
+	<div id = "clock">
+		<div id = "hour" class = "clock-son">
+			<span></span>
+		</div>
+		<div class = "cen">
+			
+		</div>
+		<div id = "min" class = "clock-son">
+			<span></span>
+		</div>
+		<div class = "cen">
+			
+		</div>
+		<div id = "sec" class = "clock-son">
+			<span></span>
+		</div>
+	</div>
+</body>
+<script>
+	printTime();
+	
+	function Time(){
+		var hour;
+		var min;
+		var sec;
+	}
+
+	function getSystemTime(){
+		var myDate = new Date();
+		var tm = new Time();
+		tm.hour = myDate.getHours();
+		tm.min = myDate.getMinutes();
+		tm.sec = myDate.getSeconds();
+		return tm;
+	}
+
+	function printTime(){
+		var time;
+		var h = document.getElementById("hour").getElementsByTagName("span")[0];
+		var m = document.getElementById("min").getElementsByTagName("span")[0];
+		var s = document.getElementById("sec").getElementsByTagName("span")[0];
+		setInterval(function(){
+			time = getSystemTime();
+			h.innerHTML = time.hour;
+			m.innerHTML = time.min;
+			s.innerHTML = time.sec;
+		},1000);
+	}
+</script>
+<html>
